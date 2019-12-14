@@ -1,0 +1,17 @@
+version: '3.6'
+services:
+  web:
+    container_name: web
+    build: web
+    restart: always
+    ports:
+      - 80:80
+    volumes:
+      - ./web:/var/www/html
+
+  auth:
+    container_name: auth_service
+    build: auth_service
+    restart: always
+    volumes:
+      - ./auth_service:/var/www/html
