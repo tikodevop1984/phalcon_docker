@@ -8,6 +8,9 @@ services:
       - 80:80
     volumes:
       - ./web:/var/www/html
+    networks:
+      - back
+      - front
 
   auth:
     container_name: auth_service
@@ -15,3 +18,11 @@ services:
     restart: always
     volumes:
       - ./auth_service:/var/www/html
+    networks:
+      - back
+
+networks:
+  back:
+    driver: "bridge"
+  front:
+    driver: "bridge"
