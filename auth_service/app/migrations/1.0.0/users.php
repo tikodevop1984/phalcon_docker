@@ -69,8 +69,8 @@ class UsersMigration_100 extends Migration
 
         self::$connection->insert(
             'users',
-            ['admin','admin'],
-            ['login','password']
+            [1,'admin', md5('admin')],
+            ['id','login','password']
         );
     }
 

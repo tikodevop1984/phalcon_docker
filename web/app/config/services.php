@@ -53,3 +53,10 @@ $di->setShared('auth', function() {
 
     return Client::factory($config->services->auth->host);
 });
+
+/**
+ * Forms
+ */
+$di->setShared('forms', function() {
+    return new Phalcon\Forms\Manager();
+});

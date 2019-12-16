@@ -6,27 +6,38 @@
 
 //Login form
 $app->get('/', function () {
-    echo $this['view']->render('form');
+    echo $this['view']->render('form', ['form' => $this->forms->get('login')]);
 });
 
 
 //Login handler
 $app->post('/login', function(){
     $postData = $this->request->getPost();
+    $form = $this->forms->get('login');
 
+    if (!$form->isValid($postData)) {
+        $messages = $form->getMessages();
+
+        $response = '';
+        foreach ($messages as $message) {
+            $response .= $message . '<br>';
+        }
+        return $response;
+    }
+
+    $postData['password'] = md5($postData['password']);
     $authService = $this->di->getShared('auth');
-
-    $request = $authService->request(1, 'login', $postData);
+    $request = $authService->request(rand(0, 100), 'login', $postData);
     try {
         $response = $authService->send($request);
         $result = $response->getRpcResult();
         if (!$result) {
-            echo "неверный логин или пароль";
-        } else {
-            echo "успешная авторизация";
+            return "неверный логин или пароль";
         }
+
+        return "успешная авторизация";
     } catch (\Throwable $e) {
-        echo "Что-то пошло не так";
+        return "Что-то пошло не так";
     }
 });
 

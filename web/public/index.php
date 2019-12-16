@@ -35,6 +35,11 @@ try {
     include APP_PATH . '/config/loader.php';
 
     /**
+     * Include Forms
+     */
+    include APP_PATH . '/forms/loader.php';
+
+    /**
      * Starting the application
      * Assign service locator to the application
      */

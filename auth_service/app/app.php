@@ -18,8 +18,13 @@ $app->post('/', function () {
     $pass = $rpc->params->password ?? '';
     $response = new \JsonRPC\Response();
     $response->id = $rpc->id;
+
     $user = User::findFirst([
-        "login='$login' and password='$pass'"
+        'conditions' => 'login=:login: and password=:pass:',
+        'bind' => [
+            'login' => $login,
+            'pass' => $pass
+        ]
     ]);
     if (!empty($user)) {
         $response->result = true;
